@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import data from 'data/todo.json';
+import React, { useState, useEffect } from 'react';
 import { Container, Button, Card, Col, Row } from 'react-bootstrap';
 
 import Header from 'components/Todo/Header';
@@ -7,7 +6,13 @@ import ToDoList from 'components/Todo/ToDoList';
 import ToDoForm from 'components/Todo/ToDoForm';
 
 const TodoPage = () => {
-	const [toDoList, setToDoList] = useState(data);
+	const [toDoList, setToDoList] = useState(
+		JSON.parse(localStorage.getItem('toDoList')) || []
+	);
+
+	useEffect(() => {
+		localStorage.setItem('toDoList', JSON.stringify(toDoList));
+	}, [toDoList]);
 
 	const handleToggle = id => {
 		let mapped = toDoList.map(todo => {
