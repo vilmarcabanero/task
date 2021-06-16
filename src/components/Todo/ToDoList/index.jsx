@@ -1,15 +1,10 @@
 import React from 'react';
-import ToDo from 'components/Todo/ToDo';
+import ToDo from 'components/Todo/ToDoList/ToDo';
 
 const ToDoList = ({ toDoList, handleToggle }) => {
-	// console.log(toDoList)
-	return (
-		<div>
-			{toDoList.map(todo => {
-				return <ToDo handleToggle={handleToggle} key={todo.id} todo={todo} />;
-			})}
-		</div>
-	);
+	return toDoList.map(todo => {
+		return <ToDo handleToggle={handleToggle} key={todo.id} todo={todo} />;
+	});
 };
 
 export default ToDoList;
