@@ -5,7 +5,8 @@ import * as S from './styles';
 const ToDoForm = ({ toDoList, setToDoList }) => {
 	const [newTask, setNewTask] = useState('');
 
-	const addTaskHandler = () => {
+	const addTaskHandler = e => {
+		e.preventDefault();
 		setToDoList([
 			...toDoList,
 			{
@@ -19,7 +20,7 @@ const ToDoForm = ({ toDoList, setToDoList }) => {
 	};
 
 	return (
-		<Form>
+		<Form onSubmit={addTaskHandler}>
 			<S.Group>
 				<Form.Control
 					type='text'
@@ -27,7 +28,7 @@ const ToDoForm = ({ toDoList, setToDoList }) => {
 					value={newTask}
 					onChange={e => setNewTask(e.target.value)}
 				/>
-				<S.Btn onClick={addTaskHandler}>Add task</S.Btn>
+				<S.Btn type='submit'>Add task</S.Btn>
 			</S.Group>
 		</Form>
 	);
