@@ -1,23 +1,32 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import * as S from './styles';
-import TodolistContext from 'context/todolist';
 
 const ToDoForm = () => {
 	const [newTask, setNewTask] = useState('');
 
-	const { toDoList, setToDoList } = useContext(TodolistContext);
+	const url = 'http://localhost:4000/api/todolist';
+
+	const createTodo = () => {
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				task: newTask,
+			}),
+		})
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+			})
+			.catch(err => console.log(err));
+	};
 
 	const addTaskHandler = e => {
 		e.preventDefault();
-		setToDoList([
-			...toDoList,
-			{
-				task: newTask,
-				complete: false,
-			},
-		]);
-
+		createTodo();
 		setNewTask('');
 	};
 
