@@ -8,17 +8,24 @@ import ToDoForm from 'components/Todo/ToDoForm';
 import { TodolistProvider } from 'context/todolist';
 
 const TodoPage = () => {
-	const [toDoList, setToDoList] = useState(
-		JSON.parse(localStorage.getItem('toDoList')) || []
-	);
+	const [toDoList, setToDoList] = useState([]);
 
 	useEffect(() => {
-		localStorage.setItem('toDoList', JSON.stringify(toDoList));
+		getTodolist();
 	}, [toDoList]);
 
-	const handleToggle = id => {
+	const getTodolist = () => {
+		fetch('http://localhost:4000/api/todolist/all')
+			.then(res => res.json())
+			.then(data => {
+				// console.log(data);
+				setToDoList(data);
+			});
+	};
+
+	const handleToggle = _id => {
 		let mapped = toDoList.map(todo => {
-			return todo.id === Number(id)
+			return todo._id === Number(_id)
 				? { ...todo, complete: !todo.complete }
 				: { ...todo };
 		});

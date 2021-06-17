@@ -6,7 +6,7 @@ const ToDoList = () => {
 	const { handleToggle, toDoList } = useContext(TodolistContext);
 
 	return toDoList.map(todo => {
-		return <ToDo handleToggle={handleToggle} key={todo.id} todo={todo} />;
+		return <ToDo handleToggle={handleToggle} key={todo._id} todo={todo} />;
 	});
 };
 

@@ -1,19 +1,18 @@
 import React, { useState, useContext } from 'react';
 import { Form } from 'react-bootstrap';
 import * as S from './styles';
-import TodolistContext from 'context/todolist'
+import TodolistContext from 'context/todolist';
 
 const ToDoForm = () => {
 	const [newTask, setNewTask] = useState('');
 
-	const {toDoList, setToDoList} = useContext(TodolistContext)
+	const { toDoList, setToDoList } = useContext(TodolistContext);
 
 	const addTaskHandler = e => {
 		e.preventDefault();
 		setToDoList([
 			...toDoList,
 			{
-				id: Math.random(),
 				task: newTask,
 				complete: false,
 			},
