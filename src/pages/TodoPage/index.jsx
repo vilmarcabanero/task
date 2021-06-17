@@ -11,11 +11,11 @@ const TodoPage = () => {
 	const [toDoList, setToDoList] = useState([]);
 
 	useEffect(() => {
-		getTodolist();
+		getActiveTodolist();
 	}, [toDoList]);
 
-	const getTodolist = () => {
-		fetch('http://localhost:4000/api/todolist')
+	const getActiveTodolist = () => {
+		fetch('http://localhost:4000/api/todolist/active')
 			.then(res => res.json())
 			.then(data => {
 				// console.log(data);
@@ -24,9 +24,19 @@ const TodoPage = () => {
 			.catch(err => console.log(err));
 	};
 
+	const archiveCompleteTodolist = () => {
+		fetch('http://localhost:4000/api/todolist/archive', {
+			method: 'PUT',
+		})
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+			})
+			.catch(err => console.log(err));
+	};
+
 	const handleFilter = () => {
-		let filtered = toDoList.filter(task => !task.complete);
-		setToDoList(filtered);
+		archiveCompleteTodolist();
 	};
 
 	const todolistProviderValues = {
