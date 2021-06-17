@@ -3,6 +3,9 @@ import * as S from './styles';
 
 const Counter = () => {
 	const [count, setCount] = useState(0);
+	// const toDoList = useSelector(state => state.toDoList);
+
+	// console.log(toDoList);
 
 	const increment = () => {
 		setCount(prevCount => prevCount + 1);
@@ -14,6 +17,11 @@ const Counter = () => {
 
 	return (
 		<S.Container>
+			<S.Title>Todolist</S.Title>
+
+			<br />
+			<br />
+			<br />
 			<S.Title>Hello from Counter.</S.Title>
 			<S.Count>{count}</S.Count>
 			<S.ButtonContainer>
