@@ -38,12 +38,12 @@ const ToDoForm = () => {
 		e.preventDefault();
 		if (isEditing) {
 			console.log('Task updated.');
-			api.updateTodo(selectedId, currentTask, state, setState, setToDoList);
+			api.updateTodo(selectedId, currentTask, state, setState, setToDoList)
 			setIsEditing(false);
 		} else {
 			api.createTodo(newTask, state, setState, setToDoList);
 		}
-		
+
 		setState(!state);
 		setNewTask('');
 		setCurrentTask('');
