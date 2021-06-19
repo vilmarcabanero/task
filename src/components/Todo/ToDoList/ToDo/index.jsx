@@ -1,14 +1,14 @@
 import React from 'react';
 import './styles.css';
 import TodolistContext from 'context/todolist';
+import { api } from 'utils/constants';
+import { Card } from 'react-bootstrap';
 
 const ToDo = ({ todo }) => {
 	const { toDoList } = React.useContext(TodolistContext);
 
-	const url = 'http://localhost:4000/api/todolist';
-
 	const makeComplete = _id => {
-		fetch(`${url}/makecomplete/${_id}`, {
+		fetch(`${api}/todolist/makecomplete/${_id}`, {
 			method: 'PUT',
 		})
 			.then(res => res.json())
@@ -19,7 +19,7 @@ const ToDo = ({ todo }) => {
 	};
 
 	const makeIncomplete = _id => {
-		fetch(`${url}/makeincomplete/${_id}`, {
+		fetch(`${api}/todolist/makeincomplete/${_id}`, {
 			method: 'PUT',
 		})
 			.then(res => res.json())
@@ -40,12 +40,16 @@ const ToDo = ({ todo }) => {
 	};
 
 	return (
-		<div
-			onClick={e => handleToggle(e.target.id)}
-			id={todo._id}
-			className={todo.complete ? 'todo strike' : 'todo'}
-		>
-			{todo.task}
+		<div className='m-2'>
+			<Card className='p-2'>
+				<div
+					onClick={e => handleToggle(e.target.id)}
+					id={todo._id}
+					className={todo.complete ? 'todo strike' : 'todo'}
+				>
+					{todo.task}
+				</div>
+			</Card>
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Card, Col, Row } from 'react-bootstrap';
+import { Container, Button, Col, Row } from 'react-bootstrap';
 
 import Header from 'components/Todo/Header';
 import ToDoList from 'components/Todo/ToDoList';
@@ -7,36 +7,17 @@ import ToDoForm from 'components/Todo/ToDoForm';
 
 import { TodolistProvider } from 'context/todolist';
 
+import * as api from 'api/todolists';
+
 const TodoPage = () => {
 	const [toDoList, setToDoList] = useState([]);
 
 	useEffect(() => {
-		getActiveTodolist();
+		api.getActiveTodolist(setToDoList);
 	}, [toDoList]);
 
-	const getActiveTodolist = () => {
-		fetch('http://localhost:4000/api/todolist/active')
-			.then(res => res.json())
-			.then(data => {
-				// console.log(data);
-				setToDoList(data);
-			})
-			.catch(err => console.log(err));
-	};
-
-	const archiveCompleteTodolist = () => {
-		fetch('http://localhost:4000/api/todolist/archive', {
-			method: 'PUT',
-		})
-			.then(res => res.json())
-			.then(data => {
-				console.log(data);
-			})
-			.catch(err => console.log(err));
-	};
-
 	const handleFilter = () => {
-		archiveCompleteTodolist();
+		api.archiveCompleteTodolist();
 	};
 
 	const todolistProviderValues = {
@@ -50,11 +31,7 @@ const TodoPage = () => {
 				<Row>
 					<Col className='m-auto mt-3 mb-5' xs={12} md={4}>
 						<Header />
-						<Card className='mb-3'>
-							<Card.Body>
-								<ToDoList />
-							</Card.Body>
-						</Card>
+						<ToDoList />
 
 						<Button
 							style={{ width: '100%' }}

@@ -1,23 +1,24 @@
-// import Counter from 'components/Counter';
-import React, { Fragment, useEffect } from 'react';
+import React, { useState } from 'react';
+import { UserProvider } from 'context/user';
+
 import TodoPage from 'pages/TodoPage';
-
-import { useDispatch } from 'react-redux';
-import { getTodoList } from 'redux/actions/todolist';
-
+// import RegisterForm from 'components/Auth/RegisterForm'
 
 const App = () => {
+	const [user, setUser] = useState({});
 
+	const todolistProviderValues = {
+		user,
+		setUser,
+	};
 
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(getTodoList());
-	}, [dispatch]);
 	return (
-		<Fragment>
-			{/* <Counter /> */}
-			<TodoPage />
-		</Fragment>
+		<UserProvider value={todolistProviderValues}>
+			<>
+				<TodoPage />
+				{/* <RegisterForm /> */}
+			</>
+		</UserProvider>
 	);
 };
 

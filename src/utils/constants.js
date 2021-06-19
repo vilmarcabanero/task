@@ -1,1 +1,1 @@
-export const GET_TODO_LIST = 'GET_TODO_LIST'
+export const api = 'http://localhost:4000/api';
