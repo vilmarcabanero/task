@@ -1,181 +1,166 @@
-import React, { useState, useEffect } from 'react';
-// import { Form } from 'react-bootstrap';
-import { TextField, Button, Card } from '@material-ui/core';
-import useStyles from './styles';
-import validator from 'validator';
-import Swal from 'sweetalert2';
-import { api } from 'utils/constants';
+import React, {useEffect, useState } from 'react';
+import {
+	Card,
+	Row,
+	Col,
+	Button,
+	InputGroup,
+	FormControl,
+} from 'react-bootstrap';
+import { Close, Email, Person, PermIdentity, Lock } from '@material-ui/icons';
+import { Button as MUIButton } from '@material-ui/core';
 
-export default function RegisterPage() {
-	const classes = useStyles();
+import './style.css';
+import { validateRegister } from 'utils/validators';
 
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPw] = useState('');
+const RegisterForm = ({ setIsRegistered, history }) => {
+	const [registerUserData, setRegisterUserData] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
+	});
 	const [error, setError] = useState('');
-
-	const [isActive, setIsActive] = useState(true);
+	const [isValid, setIsValid] = useState(true);
+	// console.log(isValid);
 
 	useEffect(() => {
-		if (
-			firstName !== '' &&
-			lastName !== '' &&
-			email !== '' &&
-			password !== '' &&
-			confirmPassword !== '' &&
-			password === confirmPassword
-		) {
-			setIsActive(true);
-		} else {
-			setIsActive(false);
+		if (localStorage.getItem('authToken')) {
+			history.push('/');
 		}
+	}, []);
 
-		if (!firstName.trim('').length) {
-			setError('Please provide a first name.');
-		} else if (!lastName.trim('').length) {
-			setError('Please provide a last name.');
-		} else if (!email.trim('').length) {
-			setError('Please provide an email.');
-		} else if (!validator.isEmail(email)) {
-			setError('Please provide a valid email.');
-		} else if (!password.trim('').length) {
-			setError('Please provide a password.');
-		} else if (password.length < 8) {
-			setError('Password must be at least 8 characters long.');
-			// console.log(error);
-		} else if (password !== confirmPassword) {
-			setError('Passwords do not match.');
-		} else {
-			setError('');
-		}
-	}, [password, confirmPassword, email, firstName, lastName]);
-
-	const registerUser = e => {
+	const registerHandler = e => {
 		e.preventDefault();
-		fetch(`${api}/auth/register`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
-				firstName: firstName,
-				lastName: lastName,
-				email: email,
-				password: password,
-				confirmPassword: confirmPassword,
-			}),
-		})
-			.then(res => res.json())
-			.then(data => {
-				console.log(data);
-				if (data.isSuccessful) {
-					Swal.fire({
-						icon: 'success',
-						title: 'Registered Successfully.',
-						text: data.message,
-					});
-					clear();
-				} else {
-					Swal.fire({
-						icon: 'error',
-						title: 'Failed to register.',
-						text: data.message,
-					});
-				}
-			})
-			.catch(err => console.log(err.message));
-	};
-
-	const clear = () => {
-		setFirstName('');
-		setLastName('');
-		setEmail('');
-		setPassword('');
-		setConfirmPw('');
+		// console.log(registerUserData);
+		validateRegister(
+			setIsValid,
+			setError,
+			registerUserData,
+			setRegisterUserData,
+			history
+		);
 	};
 
 	return (
-		<div className='text-center'>
-			<Card className={classes.card}>
-				<h3>Register</h3>
-				<form className={classes.root} onSubmit={registerUser}>
-					<TextField
-						type='text'
-						size='small'
-						required
-						variant='outlined'
-						label='Enter First Name'
-						value={firstName}
-						onChange={e => setFirstName(e.target.value)}
-					/>
+		<Row className='mt-5'>
+			<Col xs={12} md={4} className='m-auto mt-5'>
+				<Card className='register-card'>
+					<Card.Body>
+						<form onSubmit={registerHandler} className='form'>
+							<h2 className='text-center title'>Register </h2>
+							<div className='input-groups pb-3 mt-4'>
+								<InputGroup className='mb-3'>
+									<FormControl
+										placeholder='First Name'
+										value={registerUserData.firstName}
+										onChange={e =>
+											setRegisterUserData({
+												...registerUserData,
+												firstName: e.target.value,
+											})
+										}
+									/>
+									<InputGroup.Text>
+										<Person color='primary' />
+									</InputGroup.Text>
+								</InputGroup>
+								<InputGroup className='mb-3'>
+									<FormControl
+										placeholder='Last Name'
+										value={registerUserData.lastName}
+										onChange={e =>
+											setRegisterUserData({
+												...registerUserData,
+												lastName: e.target.value,
+											})
+										}
+									/>
+									<InputGroup.Text>
+										<PermIdentity color='primary' />
+									</InputGroup.Text>
+								</InputGroup>
+								<InputGroup className='mb-3'>
+									<FormControl
+										type='text'
+										placeholder='Email address'
+										value={registerUserData.email}
+										onChange={e =>
+											setRegisterUserData({
+												...registerUserData,
+												email: e.target.value,
+											})
+										}
+									/>
+									<InputGroup.Text>
+										<Email color='primary' />
+									</InputGroup.Text>
+								</InputGroup>
+								<InputGroup className='mb-3'>
+									<FormControl
+										type='password'
+										placeholder='Password'
+										value={registerUserData.password}
+										onChange={e =>
+											setRegisterUserData({
+												...registerUserData,
+												password: e.target.value,
+											})
+										}
+									/>
+									<InputGroup.Text>
+										<Lock color='primary' />
+									</InputGroup.Text>
+								</InputGroup>
+								<InputGroup className='mb-3'>
+									<FormControl
+										type='password'
+										placeholder='Confirm Password'
+										value={registerUserData.confirmPassword}
+										onChange={e =>
+											setRegisterUserData({
+												...registerUserData,
+												confirmPassword: e.target.value,
+											})
+										}
+									/>
+									<InputGroup.Text>
+										<Lock color='primary' />
+									</InputGroup.Text>
+								</InputGroup>
 
-					<TextField
-						type='text'
-						size='small'
-						required
-						variant='outlined'
-						label='Enter Last Name'
-						value={lastName}
-						onChange={e => setLastName(e.target.value)}
-					/>
+								<MUIButton
+									type='submit'
+									variant='contained'
+									color='primary'
+									className='w-100 mt-3'
+								>
+									Register
+								</MUIButton>
 
-					<TextField
-						type='email'
-						size='small'
-						required
-						variant='outlined'
-						label='Enter Email'
-						value={email}
-						onChange={e => setEmail(e.target.value)}
-					/>
-					<TextField
-						type='password'
-						size='small'
-						required
-						variant='outlined'
-						label='Enter Password'
-						value={password}
-						onChange={e => setPassword(e.target.value)}
-					/>
-
-					<TextField
-						type='password'
-						size='small'
-						required
-						variant='outlined'
-						label='Confirm Password'
-						value={confirmPassword}
-						onChange={e => setConfirmPw(e.target.value)}
-					/>
-
-					{isActive ? (
-						<Button
-							className={classes.button}
-							variant='contained'
-							color='primary'
-							type='submit'
-						>
-							Submit
-						</Button>
-					) : (
-						<Button
-							className={classes.button}
-							variant='contained'
-							color='primary'
-							type='submit'
-							disabled
-						>
-							Submit
-						</Button>
-					)}
-				</form>
-
-				<div className={classes.errorContainer}>
-					{!isActive && <p className={classes.error}>{error}</p>}
-				</div>
-			</Card>
-		</div>
+								<MUIButton
+									className='already-registered mt-3'
+									onClick={() => setIsRegistered(true)}
+								>
+									Already have an account
+								</MUIButton>
+							</div>
+							{!isValid && (
+								<div className='error-container w-100'>
+									<span className='error'>{error}</span>
+									<Close
+										className='close-icon'
+										onClick={() => setIsValid(true)}
+									/>
+								</div>
+							)}
+						</form>
+					</Card.Body>
+				</Card>
+			</Col>
+		</Row>
 	);
-}
+};
+
+export default RegisterForm;

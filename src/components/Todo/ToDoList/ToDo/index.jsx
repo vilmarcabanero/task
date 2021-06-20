@@ -14,7 +14,7 @@ const ToDo = ({ todo }) => {
 		setToDoList,
 		setCurrentTask,
 		setIsEditing,
-		setSelectedId
+		setSelectedId,
 	} = React.useContext(TodolistContext);
 
 	const handleToggle = async _id => {
@@ -33,18 +33,21 @@ const ToDo = ({ todo }) => {
 	const updateTodoHandler = async _id => {
 		const selectedTodo = await api.getTodo(_id);
 		// console.log(selectedTodo.task);
-		
+
 		setIsEditing(true);
 		setCurrentTask(selectedTodo.task);
-		setSelectedId(_id)
+		setSelectedId(_id);
 	};
 
 	const deleteTodoHandler = async _id => {
 		// const [selectedTodo] = toDoList.filter(todo => todo._id === _id);
-		const selectedTodo = await api.getTodo(_id);
+		// const selectedTodo = await api.getTodo(_id);
 		// console.log(selectedTodo.task);
-		api.deleteTodo(_id, state, setState, setToDoList)
-		setState(!state)
+		api.deleteTodo(_id, state, setState, setToDoList);
+		
+		api.getActiveTodolist(setToDoList)
+		setToDoList(toDoList);
+		setState(!state);
 	};
 
 	return (
