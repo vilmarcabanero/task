@@ -1,5 +1,9 @@
 .login-card {
 	height: 27rem;
+	max-width: 22rem;
+	width: 100%;
+	margin: auto;
+	margin-top: 5rem;
 }
 
 .form {

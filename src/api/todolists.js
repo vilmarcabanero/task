@@ -5,7 +5,7 @@ export const getActiveTodolist = async setToDoList => {
 		const { data } = await api.get('/todolist/active');
 		setToDoList(data);
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data);
 	}
 };
 
@@ -14,7 +14,7 @@ export const getCompleteTodolist = async setToDoList => {
 		const { data } = await api.get('/todolist/complete');
 		setToDoList(data);
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data);
 	}
 };
 
@@ -24,7 +24,7 @@ export const archiveCompleteTodolist = async (state, setState, setToDoList) => {
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data);
 	}
 };
 
@@ -35,7 +35,7 @@ export const getTodo = async _id => {
 		// console.log(data._id === _id);
 		return data;
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data);
 	}
 };
 
@@ -45,7 +45,7 @@ export const makeComplete = async (_id, state, setState, setToDoList) => {
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data);
 	}
 };
 
@@ -55,7 +55,7 @@ export const makeIncomplete = async (_id, state, setState, setToDoList) => {
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data);
 	}
 };
 
@@ -65,7 +65,7 @@ export const createTodo = async (newTask, state, setState, setToDoList) => {
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data);
 	}
 };
 
@@ -82,7 +82,7 @@ export const updateTodo = async (
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data);
 	}
 };
 
@@ -93,6 +93,6 @@ export const deleteTodo = async (_id, state, setState, setToDoList) => {
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
-		console.log(err);
+		console.log(err.response.data);
 	}
 };
