@@ -25,12 +25,6 @@ const RegisterForm = ({ setIsRegistered, history }) => {
 	const [isValid, setIsValid] = useState(true);
 	// console.log(isValid);
 
-	useEffect(() => {
-		if (localStorage.getItem('authToken')) {
-			history.push('/');
-		}
-	}, []);
-
 	const registerHandler = e => {
 		e.preventDefault();
 		// console.log(registerUserData);

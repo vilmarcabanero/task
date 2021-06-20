@@ -7,8 +7,11 @@ import ToDoList from 'components/Todo/ToDoList';
 import ToDoForm from 'components/Todo/ToDoForm';
 
 import { TodolistProvider } from 'context/todolist';
+import UserContext from 'context/user';
 
 import * as api from 'api/todolists';
+import * as userAPI from 'api/user';
+import './style.css';
 
 const TodoPage = ({ history }) => {
 	const [toDoList, setToDoList] = useState([]);
@@ -16,6 +19,8 @@ const TodoPage = ({ history }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [state, setState] = useState(true);
 	const [selectedId, setSelectedId] = useState('');
+
+	const { user, setUser } = useContext(UserContext);
 
 	useEffect(() => {
 		api.getActiveTodolist(setToDoList);
@@ -25,8 +30,15 @@ const TodoPage = ({ history }) => {
 
 	useEffect(() => {
 		setToDoList(toDoList);
+
 		console.log('Re-render from useEffect setToDoList(toDoList)');
 	}, [toDoList, state]);
+
+	useEffect(() => {
+		userAPI.getUserDetails(setUser);
+	}, []);
+
+	console.log('User loop?');
 
 	const handleFilter = () => {
 		api.archiveCompleteTodolist(state, setState, setToDoList);
@@ -60,10 +72,15 @@ const TodoPage = ({ history }) => {
 
 	return (
 		<TodolistProvider value={todolistProviderValues}>
-			<Container className='text-center'>
+			<Container className='container'>
+				<div className=''>
+					<p className='user'>{user.firstName}</p>
+					<Button onClick={logoutHandler} className='logout-button'>
+						Logout
+					</Button>
+				</div>
 				<Row>
 					<Col className='m-auto mt-3 mb-5' xs={12} md={4}>
-						<Button onClick={logoutHandler}>Logout</Button>
 						<Header />
 						<ToDoForm />
 						<Button

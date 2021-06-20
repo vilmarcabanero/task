@@ -7,12 +7,10 @@ import {
 	InputGroup,
 	FormControl,
 } from 'react-bootstrap';
-import { Close, Email, Person, PermIdentity, Lock } from '@material-ui/icons';
+import { Close, Email, Lock } from '@material-ui/icons';
 import { Button as MUIButton } from '@material-ui/core';
 import './style.css';
 import { validateLogin } from 'utils/validators';
-import { Link } from 'react-router-dom';
-import TodolistContext from 'context/todolist';
 
 const LoginForm = ({ setIsRegistered, history }) => {
 	const [loginUserData, setLoginUserData] = useState({
@@ -24,16 +22,14 @@ const LoginForm = ({ setIsRegistered, history }) => {
 	});
 	const [error, setError] = useState('');
 	const [isValid, setIsValid] = useState(true);
-	// console.log(isValid);
 
-	useEffect(() => {
-		if (localStorage.getItem('authToken')) {
-			history.push('/');
-		}
-	}, []);
+	// useEffect(() => {
+
+	// }, []);
 
 	const loginHandler = e => {
 		e.preventDefault();
+
 		validateLogin(
 			setIsValid,
 			setError,
@@ -41,6 +37,10 @@ const LoginForm = ({ setIsRegistered, history }) => {
 			setLoginUserData,
 			history
 		);
+
+		// if (localStorage.getItem('authToken')) {
+		// 	history.push('/');
+		// }
 	};
 
 	return (

@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { Container } from 'react-bootstrap';
 import LoginForm from 'components/Auth/LoginForm';
 import RegisterForm from 'components/Auth/RegisterForm';
-import TodoPage from 'pages/TodoPage';
 
 const AuthPage = ({ history }) => {
 	const [isRegistered, setIsRegistered] = useState(true);
 	const [willRedirect, setWillRedirect] = useState(false);
-
-	useEffect(() => {
-		if (localStorage.getItem('authToken')) {
-			history.push('/');
-		}
-	}, []);
 
 	return (
 		<Container>
