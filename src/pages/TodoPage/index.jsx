@@ -74,6 +74,7 @@ const TodoPage = ({ history }) => {
 		<TodolistProvider value={todolistProviderValues}>
 			<Container className='container'>
 				<div className=''>
+					<p className='profile-pic'>{[...user.firstName][0]}</p>
 					<p className='user'>{user.firstName}</p>
 					<Button onClick={logoutHandler} className='logout-button'>
 						Logout

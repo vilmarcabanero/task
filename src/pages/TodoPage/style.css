@@ -9,7 +9,7 @@
 
 .user {
 	position: absolute;
-	margin-top: 2rem;
+	margin-top: 2.5rem;
 	right: 5rem;
 	margin-right: 2rem;
 	display: flex;
@@ -19,3 +19,18 @@
 	color: steelblue;
 }
 
+.profile-pic {
+	position: absolute;
+	margin-top: 2.3rem;
+	right: 8.5rem;
+	margin-right: 2.2rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: 50%;
+	color: steelblue;
+	background-color: rgba(70, 130, 180, 0.2);
+	padding: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

@@ -3,7 +3,7 @@ import React from 'react';
 const Header = () => {
 	return (
 		<header className='text-center mt-5'>
-			<h1>To Do List G!</h1>
+			<h1>Task</h1>
 		</header>
 	);
 };

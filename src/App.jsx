@@ -10,19 +10,17 @@ const App = () => {
 	const [user, setUser] = useState({
 		firstName: '',
 		lastName: '',
-		email: ''
-	})
+		email: '',
+	});
 
 	const userProviderValues = {
 		user,
-		setUser
-	}
+		setUser,
+	};
 
 	return (
 		<UserProvider value={userProviderValues}>
 			<Switch>
-
-
 				{/* <Route exact path='/' component={TodoPage} /> */}
 				<PrivateRoute exact path='/' component={TodoPage} />
 				<Route exact path='/auth' component={AuthPage} />
