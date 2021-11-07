@@ -8,7 +8,7 @@ export const getActiveTodolist = async setToDoList => {
 			},
 		};
 
-		const { data } = await api.get('/todolist/active', config);
+		const { data } = await api.get('/todos/active', config);
 
 		// console.log(data);
 		setToDoList(data);
@@ -24,7 +24,7 @@ export const getCompleteTodolist = async setToDoList => {
 				Authorization: `Bearer ${localStorage.getItem('authToken')}`,
 			},
 		};
-		const { data } = await api.get('/todolist/complete', config);
+		const { data } = await api.get('/todos/complete', config);
 		setToDoList(data);
 	} catch (err) {
 		console.log(err.response.data);
@@ -38,7 +38,7 @@ export const archiveCompleteTodolist = async (state, setState, setToDoList) => {
 				Authorization: `Bearer ${localStorage.getItem('authToken')}`,
 			},
 		};
-		await api.put(`/todolist/archive`, {}, config);
+		await api.patch(`/todos/archive`, {}, config);
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
@@ -53,7 +53,7 @@ export const getTodo = async _id => {
 				Authorization: `Bearer ${localStorage.getItem('authToken')}`,
 			},
 		};
-		const { data } = await api.get(`/todolist/${_id}`, config);
+		const { data } = await api.get(`/todos/${_id}`, config);
 
 		// console.log(data._id === _id);
 		return data;
@@ -69,7 +69,7 @@ export const makeComplete = async (_id, state, setState, setToDoList) => {
 				Authorization: `Bearer ${localStorage.getItem('authToken')}`,
 			},
 		};
-		await api.put(`/todolist/makecomplete/${_id}`, {}, config);
+		await api.patch(`/todos/complete/${_id}`, {}, config);
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
@@ -84,7 +84,7 @@ export const makeIncomplete = async (_id, state, setState, setToDoList) => {
 				Authorization: `Bearer ${localStorage.getItem('authToken')}`,
 			},
 		};
-		await api.put(`/todolist/makeincomplete/${_id}`, {}, config);
+		await api.patch(`/todos/incomplete/${_id}`, {}, config);
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
@@ -99,7 +99,7 @@ export const createTodo = async (newTask, state, setState, setToDoList) => {
 				Authorization: `Bearer ${localStorage.getItem('authToken')}`,
 			},
 		};
-		await api.post(`/todolist`, { task: newTask }, config);
+		await api.post(`/todos`, { task: newTask }, config);
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
@@ -121,7 +121,7 @@ export const updateTodo = async (
 			},
 		};
 		// console.log(_id)
-		await api.put(`/todolist/${_id}`, { task: selectedTask }, config);
+		await api.patch(`/todos/${_id}`, { task: selectedTask }, config);
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {
@@ -137,7 +137,7 @@ export const deleteTodo = async (_id, state, setState, setToDoList) => {
 				Authorization: `Bearer ${localStorage.getItem('authToken')}`,
 			},
 		};
-		await api.delete(`/todolist/${_id}`, config);
+		await api.delete(`/todos/${_id}`, config);
 		setState(!state);
 		getActiveTodolist(setToDoList);
 	} catch (err) {

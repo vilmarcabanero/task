@@ -10,7 +10,7 @@ export const register = async (
 	try {
 		const { data } = await api.post('/auth/register', registerUserData);
 		// console.log(data);
-		if (data.success) {
+		if (data.status === 'ok') {
 			setRegisterUserData({
 				firstName: '',
 				lastName: '',
@@ -40,7 +40,7 @@ export const login = async (
 	try {
 		const { data } = await api.post('/auth/login', loginUserData);
 		// console.log(data);
-		if (data.success) {
+		if (data.status === 'ok') {
 			setLoginUserData({
 				email: '',
 				password: '',
@@ -52,7 +52,9 @@ export const login = async (
 			setIsValid(false);
 			setError(data.message);
 		}
-	} catch (err) {
-		console.log(err.message);
+
+		console.log(data);
+	} catch (error) {
+		console.log(error);
 	}
 };
