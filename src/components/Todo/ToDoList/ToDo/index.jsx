@@ -18,7 +18,7 @@ const ToDo = ({ todo }) => {
 	} = React.useContext(TodolistContext);
 
 	const handleToggle = async _id => {
-		// const [selectedTodo] = toDoList.filter(todo => todo._id === _id);
+		// const [selectedTodo] = toDoList.filter(todo => todo.id === _id);
 		const selectedTodo = await api.getTodo(_id);
 		// console.log('Selected task: ', selectedTodo.task);
 		if (selectedTodo.complete) {
@@ -40,7 +40,7 @@ const ToDo = ({ todo }) => {
 	};
 
 	const deleteTodoHandler = async _id => {
-		// const [selectedTodo] = toDoList.filter(todo => todo._id === _id);
+		// const [selectedTodo] = toDoList.filter(todo => todo.id === _id);
 		// const selectedTodo = await api.getTodo(_id);
 		// console.log(selectedTodo.task);
 		api.deleteTodo(_id, state, setState, setToDoList);
@@ -57,7 +57,7 @@ const ToDo = ({ todo }) => {
 					<Col
 						xs={9}
 						onClick={e => handleToggle(e.target.id)}
-						id={todo._id}
+						id={todo.id}
 						className={todo.complete ? 'todo strike' : 'todo'}
 					>
 						{todo.task}
@@ -66,12 +66,12 @@ const ToDo = ({ todo }) => {
 						<Edit
 							className='icon-hover'
 							style={{ color: '#1A73E8', cursor: 'pointer' }}
-							onClick={() => updateTodoHandler(todo._id)}
+							onClick={() => updateTodoHandler(todo.id)}
 						/>
 						<Delete
 							className='icon-hover'
 							style={{ color: '#1A73E8', cursor: 'pointer' }}
-							onClick={() => deleteTodoHandler(todo._id)}
+							onClick={() => deleteTodoHandler(todo.id)}
 						/>
 					</Col>
 				</Row>

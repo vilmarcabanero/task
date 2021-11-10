@@ -10,23 +10,21 @@ export const register = async (
 	try {
 		const { data } = await api.post('/auth/register', registerUserData);
 		// console.log(data);
-		if (data.status === 'ok') {
-			setRegisterUserData({
-				firstName: '',
-				lastName: '',
-				email: '',
-				password: '',
-				confirmPassword: '',
-			});
-			console.log(data);
-			localStorage.setItem('authToken', data.token);
-			history.push('/');
-		} else {
-			setIsValid(false);
-			setError(data.message);
-		}
-	} catch (err) {
-		console.log(err);
+
+		setRegisterUserData({
+			firstName: '',
+			lastName: '',
+			email: '',
+			password: '',
+			confirmPassword: '',
+		});
+		console.log(data);
+		localStorage.setItem('authToken', data.accessToken);
+		history.push('/');
+	} catch (error) {
+		console.log(error.response.data.message);
+		setIsValid(false);
+		setError(error.response.data.message[0]);
 	}
 };
 
@@ -39,22 +37,19 @@ export const login = async (
 ) => {
 	try {
 		const { data } = await api.post('/auth/login', loginUserData);
-		// console.log(data);
-		if (data.status === 'ok') {
-			setLoginUserData({
-				email: '',
-				password: '',
-			});
-			console.log(data);
-			localStorage.setItem('authToken', data.token);
-			history.push('/');
-		} else {
-			setIsValid(false);
-			setError(data.message);
-		}
+
+		setLoginUserData({
+			email: '',
+			password: '',
+		});
+		console.log(data);
+		localStorage.setItem('authToken', data.accessToken);
+		history.push('/');
 
 		console.log(data);
 	} catch (error) {
-		console.log(error);
+		console.log(error.response.data.message);
+		setIsValid(false);
+		setError(error.response.data.message);
 	}
 };
