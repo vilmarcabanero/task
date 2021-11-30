@@ -57,7 +57,7 @@ const ToDo = ({ todo }) => {
 					<Col
 						xs={9}
 						onClick={e => handleToggle(e.target.id)}
-						id={todo.id}
+						id={todo._id}
 						className={todo.complete ? 'todo strike' : 'todo'}
 					>
 						{todo.task}
@@ -66,12 +66,12 @@ const ToDo = ({ todo }) => {
 						<Edit
 							className='icon-hover'
 							style={{ color: '#1A73E8', cursor: 'pointer' }}
-							onClick={() => updateTodoHandler(todo.id)}
+							onClick={() => updateTodoHandler(todo._id)}
 						/>
 						<Delete
 							className='icon-hover'
 							style={{ color: '#1A73E8', cursor: 'pointer' }}
-							onClick={() => deleteTodoHandler(todo.id)}
+							onClick={() => deleteTodoHandler(todo._id)}
 						/>
 					</Col>
 				</Row>

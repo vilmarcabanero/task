@@ -69,6 +69,7 @@ export const makeComplete = async (_id, state, setState, setToDoList) => {
 				Authorization: `Bearer ${localStorage.getItem('authToken')}`,
 			},
 		};
+		console.log('_id: ', _id)
 		await api.patch(`/tasks/complete/${_id}`, {}, config);
 		setState(!state);
 		getActiveTodolist(setToDoList);
